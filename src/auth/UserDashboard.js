@@ -1,11 +1,29 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../authBE';
+import { getPurchaseHistory } from './apiAuth';
+import moment from 'moment';
 
 const Dashboard = () => {
   // flaw : The role can be changed in the client end ensure that you authenticate with token
-  const { user: { _id, name, email, role } } = isAuthenticated();
+  const [history, setHistory] = useState([]);
+  const { user: { _id, name, email, role }, token } = isAuthenticated();
+
+
+  const init = (userId, token) => {
+    getPurchaseHistory(userId, token).then(data => {
+      if (data.error) {
+        console.log(data.error)
+      } else {
+        setHistory(data)
+      }
+    })
+  }
+
+  useEffect(() => {
+    init(_id, token)
+  }, [])
 
   const userInfo = () => {
     return (
@@ -21,12 +39,30 @@ const Dashboard = () => {
     )
   }
 
-  const purchaseHisory = () => {
+  const purchaseHisory = (history) => {
     return (
       <div className="card mb-5">
         <h3 className="card-header">Purchase History</h3>
         <ul className="list-group">
-          <li className="list-group-item">History</li>
+          <li className="list-group-item">
+            {history.map((h, i) => {
+              return (
+                <div>
+                  <hr/>
+                  {
+                    h.products.map((p, pIndex) => (
+                      <div key={pIndex}>
+                        <h6>Product name: {p.name}</h6>
+                        <h6>Product price: {p.price}</h6>
+                        <h6>Purchase date: {moment(p.createdAt).fromNow()}</h6>
+                      </div>
+
+                    ))
+                  }
+                </div>
+              )
+            })}
+          </li>
         </ul>
       </div>
 
@@ -42,7 +78,7 @@ const Dashboard = () => {
             <Link className="nav-link" to="/cart">My Cart</Link>
           </li>
           <li className="list-group-item">
-            <Link className="nav-link" to="/profile/update">Update Profile</Link>
+            <Link className="nav-link" to={`/profile/${_id}`}>Update Profile</Link>
           </li>
         </ul>
       </div>
@@ -57,7 +93,7 @@ const Dashboard = () => {
         </div>
         <div className="col-9">
           {userInfo()}
-          {purchaseHisory()}
+          {purchaseHisory(history)}
         </div>
       </div>
     </Layout>

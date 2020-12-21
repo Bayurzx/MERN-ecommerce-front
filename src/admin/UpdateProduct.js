@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../authBE';
-import { Link } from 'react-router-dom';
-import { createProduct, getCategories } from './apiAdmin';
+import { Link, Redirect } from 'react-router-dom';
+import { getOneProduct, getCategories, updateProduct } from './apiAdmin';
 
-const AddProduct = () => {
+const UpdateProduct = ({match: {params}}) => {
 
   const { user , token } = isAuthenticated();
   const [values, setValues] = useState({
@@ -17,7 +17,7 @@ const AddProduct = () => {
     quantity: "",
     photo: "",
     loading: false,
-    error: "",
+    error: false,
     createdProduct: "",
     redirectToProfile: false,
     formData: ""
@@ -37,19 +37,41 @@ const AddProduct = () => {
     redirectToProfile,
     formData } = values;
 
-  // loAD CATEGORIES AND SET FORM data
-  const init = () => {
-    getCategories().then(data => {
+  const init = (productId) => {
+    getOneProduct(productId).then(data => {
       if (data.error) {
         setValues({...values, error: data.error})
       } else {
-        setValues({...values, categories: data, formData: new FormData()})
+        // populate the state
+        setValues({
+          ...values,
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          category: data.category._id,
+          shipping: data.shipping,
+          quantity: data.quantity,
+          formData: new FormData()
+        })
+        // load categories
+        initCategories()
+      }
+    })
+  }
+
+  // loAD CATEGORIES AND SET FORM data
+  const initCategories = () => {
+    getCategories().then(response => {
+      if (response.error) {
+        setValues({...values, error: response.error})
+      } else {
+        setValues({ categories: response, formData: new FormData()})
       }
     })
   }
 
   useEffect(() => {
-    init()
+    init(params.productId)
   }, [])
 
   const handleChange = key => event => {
@@ -61,14 +83,16 @@ const AddProduct = () => {
     })
   }
 
-  const clickSumbit = (event) => {
+  const clickSubmit = (event) => {
     setValues({...values, error: '', loading: true})
     event.preventDefault();
 
-    createProduct(user._id, token, formData)
-    .then(data => {
+    updateProduct(params.productId, user._id, token, formData).then(data => {
+      // if you find any error and was not properly returned, you
+      // It might be due to change in "product model" not well exchanged
       if(data.error) {
         setValues({...values, error: data.error})
+        console.log("data.error", data.error)
       } else {
         setValues({
           ...values,
@@ -76,9 +100,10 @@ const AddProduct = () => {
           description: '',
           photo: '',
           price: '',
-          error: "",
+          error: false,
           quantity: '',
           loading: false,
+          redirectToProfile: true,
           createdProduct: data.name
         })
       }
@@ -87,7 +112,7 @@ const AddProduct = () => {
 
   const productForm = () => {
     return (
-      <form onSubmit={ clickSumbit } className="mb-3">
+      <form onSubmit={ clickSubmit } className="mb-3">
         <h4>Post Photo</h4>
         <div className="form-group">
           <label className="btn btn btn-secondary">
@@ -104,7 +129,7 @@ const AddProduct = () => {
         </div>
         <div className="form-group">
           <label className="text-muted">Price</label>
-          <input type="number" className="form-control" value={price} onChange={ handleChange('price') }/>
+          <input type="text" className="form-control" value={price} onChange={ handleChange('price') }/>
         </div>
         <div className="form-group">
           <label className="text-muted">Quantity</label>
@@ -129,7 +154,7 @@ const AddProduct = () => {
             <option value="1">Yes</option>
           </select>
         </div>
-        <button className="btn btn-outline-primary">Create Product</button>
+        <button className="btn btn-outline-primary">Update Product</button>
       </form>
     )
   }
@@ -142,7 +167,7 @@ const AddProduct = () => {
 
   const showSuccess = () => (
       <div className="alert alert-info" style={{ display: createdProduct ? "" : "none" }}>
-        <h2>{ `${createdProduct} was created successfully!` }</h2>
+        <h2>{ `${createdProduct} was updated successfully!` }</h2>
       </div>
   )
 
@@ -154,16 +179,25 @@ const AddProduct = () => {
     )
   )
 
+  const redirectUser = () => {
+    if (redirectToProfile) {
+      if (!error) {
+        return <Redirect to='/' />
+      }
+    }
+  }
+
 // The reurn page
   return (
 
-      <Layout title="Add a new product" description={ `Hello ${user.name}, add a product` }>
+      <Layout title="Update Product" description={ `Hello ${user.name}, update a product` }>
         <div className="row">
           <div className="col-md-8 offset-md-2">
             { showError() }
             { showSuccess() }
             { showLoading() }
             { productForm() }
+            { redirectUser() }
           </div>
         </div>
       </Layout>
@@ -171,4 +205,4 @@ const AddProduct = () => {
 
 };
 
-export default AddProduct;
+export default UpdateProduct;
