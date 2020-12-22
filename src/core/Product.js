@@ -36,12 +36,11 @@ const Product = (props) => {
 
   return (
     <Layout
-       title="Product Page"
+       title={ product && product.name  }
        // && product.description.substring(0,100)  If it breaks add that
        description={ product && product.description  }
        className="container-fluid"
      >
-        <h2 className="mb-4">Single product</h2>
         <div className="row">
           <div className="col-8">
             { product && product.description && <Card product={product} showProductBtn={false} />}
