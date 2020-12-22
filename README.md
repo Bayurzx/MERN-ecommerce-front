@@ -39,32 +39,22 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# `Hello, Hope You liked the app`
+---
+##  `Here are some details about the app`
+---
+- The app was designed using the MERN stack (basically used this project to learn about React)
+- It has an optimised search feature that allows you to search by category
+- Products get updated as it is being inserted in the DB
+- There are different routes for admin and user
+- You can check the app at this link:   (for a limited time)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# `Some Heads Up`
+## `This is just a learning project so you might see some bugs`
+---
+-  Braintree sandbox does not allow over a certain aout to checkout. I found this bug late so you might want to create a error handler for that. It is printed on the console
+-  Add to force reload on checkout might want to check that out (Checkout.js)
+-  The PayPal link is not working because I deactivated it in my account so no worries there
+-  I basically didn't use CSS sorry about that if you find the design vanilla
+-  You might want to encrypt data being saved on the client storage for extra security
