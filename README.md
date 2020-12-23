@@ -62,3 +62,5 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 -  The PayPal link is not working because I deactivated it in my account so no worries there
 -  I basically didn't use CSS sorry about that if you find the design vanilla
 -  You might want to encrypt data being saved on the client storage for extra security
+
+### `Feel free to contact me on bayurzx@gmail.com` if you discover any bug or or wanna chat
