@@ -50,7 +50,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 - It has an optimised search feature that allows you to search by category
 - Products get updated as it is being inserted in the DB
 - There are different routes for admin and user
-- You can check the app at this link: bayurzx.tk or http://46.101.17.247/  (for a limited time)
+- You can check the app at this link: bayurzx.tk or http://$$$$/  (for a limited time)
 - You can make payments with credit card on app using 4111 1111 1111 1111 and 12/22 . This is not real money, just a sandbox experience. I disabled the PayPal feature 
 - Braintree was used here but I can implement any other fintech service such as Paystack/ Stripe etc
 
