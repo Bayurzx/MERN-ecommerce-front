@@ -50,17 +50,16 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 - It has an optimised search feature that allows you to search by category
 - Products get updated as it is being inserted in the DB
 - There are different routes for admin and user
-- You can check the app at this link: bayurzx.tk or http://$$$$/  (for a limited time)
-- You can make payments with credit card on app using 4111 1111 1111 1111 and 12/22 . This is not real money, just a sandbox experience. I disabled the PayPal feature 
+- You can check the app at this link: https://bayurzx.xyz/  
+- You can make payments with credit card on app using 4111 1111 1111 1111 and 12/22 . This is not real money, just a sandbox experience. I disabled the PayPal feature
 - Braintree was used here but I can implement any other fintech service such as Paystack/ Stripe etc
 
 # `Some Heads Up`
-## `This is just a learning project so you might see some bugs`
+## `You might see some bugs`
 ---
 -  Braintree sandbox does not allow over a certain amount (1,000,000 was tested) to checkout. I found this bug late so you might want to create a error handler for that. It is printed on the console
--  I forced reload on checkout might want to check that out (Checkout.js)
 -  The PayPal link is not working because I deactivated it in my account so no worries there
--  I basically didn't use CSS sorry about that if you find the design vanilla
+-  I basically didn't use CSS sorry about that if you find the design vanilla, But I can definitely switch it up if you want I myself is a bit experinced in frontend.
 -  You might want to encrypt data being saved on the client storage for extra security
 
 ### `Feel free to contact me on bayurzx@gmail.com` if you discover any bug or or wanna chat
